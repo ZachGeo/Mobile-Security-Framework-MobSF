@@ -19,7 +19,7 @@ logger = logging.getLogger(__name__)
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 
-MOBSF_VER = 'v3.0.8 Beta'
+MOBSF_VER = 'v3.0.7 Beta'
 
 BANNER = """
   __  __       _    ____  _____       _____  ___  
@@ -279,7 +279,7 @@ else:
     JADX_BINARY = ''
     BACKSMALI_BINARY = ''
     APKTOOL_BINARY = ''
-    ADB_BINARY = ''
+    ADB_BINARY = '/home/zach/Android/Sdk/platform-tools/adb'
 
     # iOS 3P Tools
     OTOOL_BINARY = ''
