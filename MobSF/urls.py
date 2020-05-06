@@ -1,4 +1,5 @@
 from django.conf.urls import url
+from django.urls import path
 
 from DynamicAnalyzer.views.android import dynamic_analyzer as dz
 from DynamicAnalyzer.views.android import (
@@ -40,6 +41,8 @@ urlpatterns = [
     url(r'^not_found/$', home.not_found),
     url(r'^zip_format/$', home.zip_format),
     url(r'^mac_only/$', home.mac_only),
+    url(r'^mytool$', home.mytool, name="mytool"),
+    url(r'^mytool_scan/$', home.mytool_scan),
 
     # Static Analysis
     # Android
