@@ -11,7 +11,7 @@ from wsgiref.util import FileWrapper
 from django.conf import settings
 from django.core.paginator import Paginator
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.template.defaulttags import register
 
 from MobSF.forms import FormUtil, UploadFileForm
@@ -271,6 +271,45 @@ def download(request):
         msg += filename
         return print_n_send_error_response(request, msg)
     return HttpResponse('')
+
+# -----------------------------------------------------------------------
+def mytool(request):
+
+    entries = []
+    db_obj = RecentScansDB.objects.all().order_by('-TIMESTAMP').values()
+    android = StaticAnalyzerAndroid.objects.all()
+    package_mapping = {}
+    for item in android:
+        package_mapping[item.MD5] = item.PACKAGE_NAME
+    for entry in db_obj:
+        if entry['MD5'] in package_mapping.keys():
+            entry['PACKAGE'] = package_mapping[entry['MD5']]
+        else:
+            entry['PACKAGE'] = ''
+        entries.append(entry)
+    context = {
+        'title': 'MyTool',
+        'entries': entries,
+        'version': settings.MOBSF_VER,
+    }
+    template = 'general/mytool.html'
+    return render(request, template, context)
+
+def mytool_scan(request):
+    
+    if request.method == "POST":
+        md5_hash = request.POST['md5']
+        if re.match('[0-9a-f]{32}', md5_hash):
+            scan = RecentScansDB.objects.filter(MD5=md5_hash)
+            sample_name = '/' + md5_hash + '.apk'
+            app_upload_dir = os.path.join(settings.UPLD_DIR, md5_hash)
+            sample = app_upload_dir + sample_name
+
+            
+            os.system(f'androguard decompile -o ~/Automation-MobSF/reports/{md5_hash}/AndroguardAnalysis/ -f png -i {sample}') 
+            print("---------------------------------~~~~~~~~~~~---------------------------")
+    return redirect('home')
+#---------------------------------------------------------------------------
 
 
 def delete_scan(request, api=False):
