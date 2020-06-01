@@ -111,13 +111,13 @@ def static_analyzer(request, api=False):
 
                     # ANALYSIS BEGINS
                     
-                    #---------------------------------------------------------------
-                    #app_upload_dir = os.path.join(settings.UPLD_DIR, md5_hash)
-                    #sample = app_upload_dir + sample_name
+                    # Androgurad - Decompile APKs and create CFG.
+
                     md5_hash = app_dic['md5']
                     sample = app_dic['app_path']
-                    os.system(f'androguard decompile -o ~/Automation-MobSF/reports/{md5_hash}/AndroguardAnalysis/ -f png -i {sample}') 
-                    #---------------------------------------------------------------
+                    os.system(f'androguard decompile -o ~/Automation-MobSF/reports/{md5_hash}/AndroguardAnalysis/ -f png -i {sample}')
+
+                    # End of Androgurad
                     
                     app_dic['size'] = str(
                         file_size(app_dic['app_path'])) + 'MB'  # FILE SIZE
