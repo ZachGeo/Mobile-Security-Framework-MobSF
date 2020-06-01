@@ -41,7 +41,7 @@ urlpatterns = [
     url(r'^not_found/$', home.not_found),
     url(r'^zip_format/$', home.zip_format),
     url(r'^mac_only/$', home.mac_only),
-    url(r'^mytool$', home.mytool, name="mytool"),
+    url(r'^mytool$', home.androdd, name="androdd"),
     url(r'^mytool_scan/$', home.mytool_scan),
 
     # Static Analysis
