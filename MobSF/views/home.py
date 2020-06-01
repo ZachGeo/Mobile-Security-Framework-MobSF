@@ -273,7 +273,8 @@ def download(request):
     return HttpResponse('')
 
 # -----------------------------------------------------------------------
-def mytool(request):
+
+def androdd(request):
 
     entries = []
     db_obj = RecentScansDB.objects.all().order_by('-TIMESTAMP').values()
@@ -288,14 +289,14 @@ def mytool(request):
             entry['PACKAGE'] = ''
         entries.append(entry)
     context = {
-        'title': 'MyTool',
+        'title': 'Androdd',
         'entries': entries,
         'version': settings.MOBSF_VER,
     }
-    template = 'general/mytool.html'
+    template = 'general/androdd.html'
     return render(request, template, context)
 
-def mytool_scan(request):
+def androdd_scan(request):
     
     if request.method == "POST":
         md5_hash = request.POST['md5']
@@ -307,8 +308,14 @@ def mytool_scan(request):
 
             
             os.system(f'androguard decompile -o ~/Automation-MobSF/reports/{md5_hash}/AndroguardAnalysis/ -f png -i {sample}') 
-            print("---------------------------------~~~~~~~~~~~---------------------------")
-    return redirect('home')
+    context = {
+        'title': 'Androdd',
+        'entries': entries,
+        'version': settings.MOBSF_VER,
+    }
+    template = 'general/androdd.html'
+    return render(request, template, context)
+
 #---------------------------------------------------------------------------
 
 
