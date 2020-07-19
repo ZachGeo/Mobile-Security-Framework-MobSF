@@ -42,7 +42,7 @@ urlpatterns = [
     url(r'^zip_format/$', home.zip_format),
     url(r'^mac_only/$', home.mac_only),
     url(r'^mytool$', home.androdd, name="androdd"),
-    url(r'^mytool_scan/$', home.mytool_scan),
+    #url(r'^mytool_scan/$', home.mytool_scan),
 
     # Static Analysis
     # Android
